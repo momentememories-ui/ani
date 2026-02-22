@@ -33,21 +33,21 @@
         .shake { animation: shake 0.4s; }
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
         .pass-dots { display: flex; gap: 15px; margin-bottom: 20px; }
-        .dot { width: 15px; height: 15px; border: 2px solid var(--primary); border-radius: 50%; transition: 0.3s; }
+        .dot { width: 15px; height: 15px; border: 2px solid var(--primary); border-radius: 50%; transition: 0.2s; }
         .dot.active { background: var(--primary); transform: scale(1.2); box-shadow: 0 0 10px var(--primary); }
-        #error-msg { height: 20px; color: var(--primary); font-size: 0.8rem; margin-bottom: 20px; font-weight: 400; }
+        #error-msg { height: 20px; color: var(--primary); font-size: 0.8rem; margin-bottom: 20px; }
         .keypad { display: grid; grid-template-columns: repeat(3, 80px); gap: 15px; }
         .key { 
             width: 80px; height: 80px; background: white; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             font-size: 24px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            transition: 0.2s; -webkit-tap-highlight-color: transparent;
+            transition: 0.1s; -webkit-tap-highlight-color: transparent;
         }
         .key:active { transform: scale(0.9); background: var(--secondary); }
 
         /* --- Main Content --- */
         #main-app { display: none; padding-bottom: 120px; }
-        section { min-height: 100vh; padding: 60px 20px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+        section { min-height: 100vh; padding: 40px 20px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
 
         .calendar-wrap { display: flex; gap: 10px; margin-bottom: 10px; }
         .calendar-card {
@@ -65,8 +65,11 @@
         }
         .clock-val { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--primary); }
 
-        /* Photo Grid (Number 1 Shape) */
-        .number-one-grid { display: grid; grid-template-columns: repeat(3, 85px); grid-template-rows: repeat(5, 85px); gap: 15px; margin-top: 30px; }
+        /* --- Photo Grid (Number 1 Shape) --- */
+        .number-one-grid { 
+            display: grid; grid-template-columns: repeat(3, 85px); grid-template-rows: repeat(5, 85px); 
+            gap: 15px; margin-top: 10px; /* ขยับขึ้นมาอีกนิด */
+        }
         .img-item { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; border: 3px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer; }
         .pos1 { grid-column: 2; grid-row: 1; }
         .pos2 { grid-column: 2; grid-row: 2; }
@@ -85,53 +88,63 @@
         .paper { position: absolute; top: 10px; left: 10px; width: 200px; height: 120px; background: white; border-radius: 5px; transition: 0.7s; z-index: 5; padding: 25px; box-sizing: border-box; overflow-y: auto; }
         .envelope.open .paper { transform: translateY(-160px); height: 280px; width: 260px; left: -20px; z-index: 15; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
 
-        /* Gift Boxes & Animation */
+        /* Gift Boxes */
         .boxes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }
         .boxes-grid div:nth-child(5) { grid-column: span 2; justify-self: center; }
         .gift-box { font-size: 70px; cursor: pointer; transition: 0.3s; display: inline-block; }
         .box-shake { animation: box-shake 0.8s ease-in-out; }
         @keyframes box-shake {
-            0% { transform: rotate(0); }
-            15% { transform: rotate(10deg); }
-            30% { transform: rotate(-10deg); }
-            45% { transform: rotate(5deg); }
-            60% { transform: rotate(-5deg); }
-            75% { transform: rotate(2deg); }
-            100% { transform: rotate(0); }
+            0%, 100% { transform: rotate(0); }
+            20% { transform: rotate(15deg); }
+            40% { transform: rotate(-15deg); }
+            60% { transform: rotate(10deg); }
+            80% { transform: rotate(-10deg); }
         }
 
-        /* --- REAL COUPON DESIGN --- */
-        .coupon-card {
-            background: white; border-radius: 10px; overflow: hidden; border: 2px solid var(--primary);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1); width: 260px; margin: 0 auto;
+        /* --- NEW TICKET DESIGN --- */
+        .ticket {
+            display: flex; width: 300px; height: 120px; background: white;
+            border-radius: 10px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin: 0 auto; position: relative; border: 1px solid #eee;
         }
-        .coupon-top { background: var(--primary); color: white; padding: 10px; font-weight: 600; font-size: 0.8rem; letter-spacing: 2px; }
-        .coupon-body { padding: 30px 15px; position: relative; }
-        .coupon-line { border-top: 2px dashed var(--secondary); margin: 20px 0; position: relative; }
-        .coupon-line::before, .coupon-line::after {
-            content: ''; width: 24px; height: 24px; background: white; border: 2px solid var(--primary);
-            border-radius: 50%; position: absolute; top: -14px;
+        .ticket-left {
+            width: 30px; background: var(--primary);
+            display: flex; align-items: center; justify-content: center;
         }
-        .coupon-line::before { left: -28px; }
-        .coupon-line::after { right: -28px; }
+        .ticket-left span { transform: rotate(-90deg); color: white; font-size: 0.6rem; white-space: nowrap; font-weight: 600; }
+        .ticket-right {
+            flex: 1; padding: 20px; display: flex; flex-direction: column; justify-content: center;
+            position: relative; text-align: left;
+        }
+        .ticket-right::before {
+            content: ''; position: absolute; left: -15px; top: 50%; transform: translateY(-50%);
+            width: 30px; height: 30px; background: #333; /* สีพื้นหลังตอนเปิด Modal */
+            border-radius: 50%; z-index: 1;
+        }
+        .ticket-right-inner {
+            border-left: 2px dashed #eee; padding-left: 20px; height: 100%;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .ticket-title { font-size: 0.6rem; color: #aaa; margin-bottom: 5px; }
+        .ticket-prize { font-size: 1.1rem; font-weight: 600; color: var(--primary); }
 
-        /* --- POLAROID DESIGN --- */
+        /* --- POLAROID (STRAIGHT) --- */
         .polaroid {
             background: white; padding: 10px 10px 35px 10px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            border-radius: 2px; transform: rotate(-2deg);
+            border-radius: 2px; transform: rotate(0deg); /* ปรับให้ไม่เอียง */
             max-width: 220px; margin: 0 auto;
         }
         .polaroid img { width: 100%; height: auto; display: block; }
         .polaroid-text { font-family: 'Caveat'; font-size: 1.4rem; color: #444; margin-top: 15px; }
 
         /* Modal */
-        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(5px); z-index: 10000; align-items: center; justify-content: center; }
+        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 10000; align-items: center; justify-content: center; }
         .modal-content { width: 90%; text-align: center; }
 
         nav { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.9); padding: 10px 25px; border-radius: 40px; display: flex; gap: 20px; z-index: 1000; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
         nav a { text-decoration: none; font-size: 24px; }
-        .btn-close { background: var(--primary); color: white; border: none; padding: 10px 30px; border-radius: 25px; cursor: pointer; font-family: 'Prompt'; margin-top: 20px; }
+        .btn-close { background: var(--primary); color: white; border: none; padding: 10px 30px; border-radius: 25px; cursor: pointer; font-family: 'Prompt'; margin-top: 25px; }
     </style>
 </head>
 <body>
@@ -147,35 +160,35 @@
             <div class="key" onclick="addNum('1')">1</div><div class="key" onclick="addNum('2')">2</div><div class="key" onclick="addNum('3')">3</div>
             <div class="key" onclick="addNum('4')">4</div><div class="key" onclick="addNum('5')">5</div><div class="key" onclick="addNum('6')">6</div>
             <div class="key" onclick="addNum('7')">7</div><div class="key" onclick="addNum('8')">8</div><div class="key" onclick="addNum('9')">9</div>
-            <div style="width:80px"></div><div class="key" onclick="addNum('0')">0</div><div class="key" onclick="clearPass()" style="font-size:14px; color:var(--primary);">Del</div>
+            <div style="width:80px"></div><div class="key" onclick="addNum('0')">0</div><div class="key" onclick="clearPass()" style="font-size:14px; color:var(--primary);">ลบ</div>
         </div>
     </div>
 
     <div id="main-app">
         <section id="time-sec">
-            <div style="font-size: 1rem; color: var(--primary); margin-bottom: 20px;">เรารักกันมานานแค่ไหนแล้วนะ...</div>
+            <div style="font-size: 1rem; color: var(--primary); margin-bottom: 20px;">เราเดินมาด้วยกันแล้ว...</div>
             <div class="calendar-wrap">
-                <div class="calendar-card"><span class="cal-top">YEARS</span><span class="cal-num" id="y">0</span><span class="cal-unit">ปี</span></div>
-                <div class="calendar-card"><span class="cal-top">MONTHS</span><span class="cal-num" id="m">0</span><span class="cal-unit">เดือน</span></div>
-                <div class="calendar-card"><span class="cal-top">DAYS</span><span class="cal-num" id="d">0</span><span class="cal-unit">วัน</span></div>
+                <div class="calendar-card"><span class="cal-top">ปี</span><span class="cal-num" id="y">0</span><span class="cal-unit">YEARS</span></div>
+                <div class="calendar-card"><span class="cal-top">เดือน</span><span class="cal-num" id="m">0</span><span class="cal-unit">MONTHS</span></div>
+                <div class="calendar-card"><span class="cal-top">วัน</span><span class="cal-num" id="d">0</span><span class="cal-unit">DAYS</span></div>
             </div>
             <div class="clock-container">
                 <span class="clock-val" id="ch">00</span> : <span class="clock-val" id="cm">00</span> : <span class="clock-val" id="cs">00</span>
             </div>
-            <p style="font-size: 0.8rem; opacity: 0.6;">Every second counts with you ❤️</p>
+            <p style="font-size: 0.8rem; opacity: 0.6;">ทุกวินาทีมีค่าเมื่ออยู่กับเธอ ❤️</p>
         </section>
 
         <section id="photo-sec">
-            <h2 style="font-family: 'Caveat'; font-size: 2.5rem; color: var(--primary); margin-bottom: 10px;">Happy 1st Anniversary</h2>
+            <h2 style="font-family: 'Caveat'; font-size: 2.2rem; color: var(--primary); margin-bottom: 15px;">Happy 1st Anniversary</h2>
             <div class="number-one-grid">
-                <img src="photo1.jpg" class="img-item pos1" onclick="zoomImg(this, 'Our first date ❤️')">
-                <img src="photo2.jpg" class="img-item pos2" onclick="zoomImg(this, 'Your sweet smile 😊')">
-                <img src="photo3.jpg" class="img-item pos3" onclick="zoomImg(this, 'Beautiful memories 🌸')">
-                <img src="photo4.jpg" class="img-item pos4" onclick="zoomImg(this, 'Always by your side 🤝')">
-                <img src="photo5.jpg" class="img-item pos5" onclick="zoomImg(this, 'Special dinner 🍲')">
-                <img src="photo6.jpg" class="img-item pos6" onclick="zoomImg(this, 'I love you more! 😍')">
-                <img src="photo7.jpg" class="img-item pos7" onclick="zoomImg(this, 'To infinity & beyond ♾️')">
-                <img src="photo8.jpg" class="img-item pos8" onclick="zoomImg(this, 'You are my world 🌍')">
+                <img src="photo1.jpg" class="img-item pos1" onclick="zoomImg(this, 'เดทแรกของเรา ❤️')">
+                <img src="photo2.jpg" class="img-item pos2" onclick="zoomImg(this, 'รอยยิ้มที่รัก 😊')">
+                <img src="photo3.jpg" class="img-item pos3" onclick="zoomImg(this, 'ความทรงจำที่สวยงาม 🌸')">
+                <img src="photo4.jpg" class="img-item pos4" onclick="zoomImg(this, 'จะอยู่ข้างเธอเสมอ 🤝')">
+                <img src="photo5.jpg" class="img-item pos5" onclick="zoomImg(this, 'มื้อพิเศษกับคนพิเศษ 🍲')">
+                <img src="photo6.jpg" class="img-item pos6" onclick="zoomImg(this, 'รักเธอมากขึ้นทุกวัน 😍')">
+                <img src="photo7.jpg" class="img-item pos7" onclick="zoomImg(this, 'จนถึงนิรันดร์ ♾️')">
+                <img src="photo8.jpg" class="img-item pos8" onclick="zoomImg(this, 'เธอคือโลกทั้งใบ 🌍')">
             </div>
         </section>
 
@@ -188,7 +201,7 @@
         </section>
 
         <section id="fun-sec">
-            <h3 style="color: var(--primary); margin-bottom: 40px;">Choose Your Gift! 🎁</h3>
+            <h3 style="color: var(--primary); margin-bottom: 40px;">เลือกของขวัญของคุณ! 🎁</h3>
             <div class="boxes-grid">
                 <div class="gift-box" onclick="pickBox(this)">🎁</div>
                 <div class="gift-box" onclick="pickBox(this)">🎁</div>
@@ -216,17 +229,18 @@
             </div>
             
             <div id="coupon-area" style="display: none;">
-                <div class="coupon-card">
-                    <div class="coupon-top">SPECIAL LOVE COUPON</div>
-                    <div class="coupon-body">
-                        <div id="coupon-text" style="font-size: 1.2rem; font-weight: 600; color: #ff4d6d; margin-bottom: 10px;"></div>
-                        <div class="coupon-line"></div>
-                        <div style="font-size: 0.65rem; color: #999;">Valid forever for my special person ❤️</div>
+                <div class="ticket">
+                    <div class="ticket-left"><span>LOVETICKET</span></div>
+                    <div class="ticket-right">
+                        <div class="ticket-right-inner">
+                            <div class="ticket-title">คูปองนี้สำหรับคุณ</div>
+                            <div id="coupon-text" class="ticket-prize"></div>
+                            <div style="font-size: 0.5rem; color: #ccc; margin-top: 10px;">*แคปหน้าจอเพื่อใช้สิทธิ์*</div>
+                        </div>
                     </div>
                 </div>
-                <p style="color: white; font-size: 0.75rem; margin-top: 15px;">Capture screen to use! 📸</p>
             </div>
-            <button class="btn-close" onclick="closeModal()">Close ♡</button>
+            <button class="btn-close" onclick="closeModal()">ปิด ♡</button>
         </div>
     </div>
 
@@ -235,17 +249,18 @@
     <script>
         let pass = "";
         const target = "091262";
-        const errorMsgs = ["รหัสผิดนะเจ้าคนดี 🥺", "จำไม่ได้หรอเนี่ย งอนละนะ! 😤", "เกือบถูกแล้ว ลองอีกนิดดด", "อ๊ะ! ผิดแล้วตัวแสบ 😜", "ม่ายช่ายยย ลองใหม่นะ"];
+        const errorMsgs = ["รหัสผิดนะเจ้าคนดี 🥺", "จำไม่ได้หรอเนี่ย งอนละนะ! 😤", "เกือบถูกแล้ว ลองอีกนิดดด", "อ๊ะ! ผิดแล้วตัวแสบ 😜", "ลองใหม่นะจ๊ะ"];
 
         function addNum(n) {
             if(pass.length < 6) {
                 pass += n;
-                updateDots();
+                document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('active', i < pass.length));
                 if(pass.length === 6) {
                     if(pass === target) {
-                        document.getElementById('bgm').play().catch(() => {});
+                        // เข้าหน้าเวลาทันที
                         document.getElementById('login-page').style.display = 'none';
                         document.getElementById('main-app').style.display = 'block';
+                        document.getElementById('bgm').play().catch(() => {});
                         startTimer();
                     } else {
                         document.getElementById('error-msg').innerText = errorMsgs[Math.floor(Math.random()*errorMsgs.length)];
@@ -255,8 +270,7 @@
                 }
             }
         }
-        function updateDots() { document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('active', i < pass.length)); }
-        function clearPass() { pass = ""; updateDots(); }
+        function clearPass() { pass = ""; document.querySelectorAll('.dot').forEach(d => d.classList.remove('active')); }
 
         function startTimer() {
             const start = new Date("2019-12-09T00:00:00");
@@ -296,7 +310,7 @@
             }
         }
 
-        const prizes = ["คูปองตามใจ 1 วัน ✨", "บุฟเฟต์ฟรี 1 มื้อ 🥩", "หอมแจ้ม 10 ที 😘", "ยกโทษให้ 1 ครั้ง 🥺", "นวดไหล่ 30 นาที 💆‍♂️"];
+        const prizes = ["คูปองตามใจ 1 วัน ✨", "บุฟเฟต์ฟรี 1 มื้อ 🥩", "หอมแก้ม 10 ที 😘", "ยกโทษให้ 1 ครั้ง 🥺", "นวดไหล่ 30 นาที 💆‍♂️"];
         function pickBox(el) {
             el.classList.add('box-shake');
             setTimeout(() => {

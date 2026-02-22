@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Memory Lane ♡</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&family=Caveat:wght@700&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <title>Happy 1st Anniversary ♡</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&family=Caveat:wght@700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #ff8fa3;
@@ -40,7 +40,7 @@
             width: 80px; height: 80px; background: white; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             font-size: 24px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            transition: 0.2s;
+            transition: 0.2s; -webkit-tap-highlight-color: transparent;
         }
         .key:active { transform: scale(0.9); background: var(--secondary); }
 
@@ -48,76 +48,67 @@
         #main-app { display: none; padding-bottom: 120px; }
         section { min-height: 100vh; padding: 60px 20px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
 
-        /* Timer Section (Digital Clock & Calendar) */
-        .timer-layout { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; align-items: center; width: 100%; }
-        
-        /* Digital Clock */
-        .digital-clock {
-            background: #222; padding: 20px; border-radius: 15px;
-            box-shadow: 0 0 20px rgba(255, 143, 163, 0.5);
-            border: 3px solid #444; color: #ff8fa3;
-            font-family: 'Orbitron', sans-serif; text-align: center; min-width: 180px;
+        /* Digital Clock NEW Design */
+        .clock-container {
+            background: #fff; padding: 15px 25px; border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(255, 143, 163, 0.2);
+            border: 4px solid var(--secondary); display: flex; gap: 10px; align-items: center; margin: 20px 0;
         }
-        .clock-label { font-size: 0.6rem; color: #888; text-transform: uppercase; margin-bottom: 5px; font-family: 'Prompt'; }
-        .clock-time { font-size: 1.8rem; letter-spacing: 2px; text-shadow: 0 0 10px #ff8fa3; }
+        .clock-unit { text-align: center; }
+        .clock-val { 
+            font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: var(--primary); 
+            background: #fff0f3; padding: 5px 10px; border-radius: 10px; min-width: 45px; display: inline-block;
+        }
+        .clock-sep { font-size: 1.5rem; color: var(--secondary); animation: blink 1s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
         /* Calendar Style */
+        .calendar-wrap { display: flex; gap: 10px; margin-bottom: 10px; }
         .calendar-card {
-            background: white; width: 120px; height: 140px; border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1); overflow: hidden; position: relative; border: 1px solid #eee;
+            background: white; width: 90px; height: 110px; border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #eee;
         }
-        .cal-top { background: var(--primary); height: 35px; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600; }
-        .cal-body { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 105px; }
-        .cal-num { font-size: 1.8rem; font-weight: 600; color: var(--text); line-height: 1; }
-        .cal-unit { font-size: 0.7rem; color: #999; margin-top: 5px; }
+        .cal-top { background: var(--primary); height: 28px; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; }
+        .cal-num { font-size: 1.5rem; font-weight: 600; color: var(--text); padding-top: 15px; display: block; text-align: center; }
+        .cal-unit { font-size: 0.6rem; color: #bbb; display: block; text-align: center; }
 
         /* Photo Grid */
         .number-one-grid { display: grid; grid-template-columns: repeat(3, 95px); grid-template-rows: repeat(5, 95px); gap: 12px; margin-top: 30px; }
         .img-item { width: 100%; height: 100%; object-fit: cover; border-radius: 15px; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer; transition: 0.3s; }
         .p1 { grid-column: 2; grid-row: 1; } .p2 { grid-column: 2; grid-row: 2; } .p3 { grid-column: 2; grid-row: 3; } .p4 { grid-column: 2; grid-row: 4; } .p5 { grid-column: 1; grid-row: 5; } .p6 { grid-column: 2; grid-row: 5; } .p7 { grid-column: 3; grid-row: 5; } .p8 { grid-column: 1; grid-row: 2; transform: rotate(-10deg); }
 
-        /* Envelope Section */
-        .envelope-container { position: relative; height: 400px; display: flex; align-items: center; justify-content: center; width: 100%; }
-        .envelope { width: 240px; height: 150px; background: #ffc1cc; border-radius: 0 0 10px 10px; position: relative; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.1); z-index: 10; margin-top: 120px; }
-        .envelope::before { content: ''; position: absolute; top: -100px; left: 0; border-left: 120px solid transparent; border-right: 120px solid transparent; border-bottom: 100px solid #ff8fa3; transition: 0.5s; z-index: 12; transform-origin: bottom; }
+        /* Envelope */
+        .envelope-container { position: relative; height: 350px; display: flex; align-items: center; justify-content: center; width: 100%; }
+        .envelope { width: 220px; height: 140px; background: #ffc1cc; border-radius: 0 0 10px 10px; position: relative; cursor: pointer; z-index: 10; margin-top: 100px; }
+        .envelope::before { content: ''; position: absolute; top: -90px; left: 0; border-left: 110px solid transparent; border-right: 110px solid transparent; border-bottom: 90px solid #ff8fa3; transition: 0.5s; z-index: 12; transform-origin: bottom; }
         .envelope.open::before { transform: rotateX(180deg); z-index: 1; }
-        .paper { position: absolute; top: 10px; left: 10px; width: 220px; height: 130px; background: white; border-radius: 5px; transition: 0.7s; z-index: 5; padding: 25px; box-sizing: border-box; overflow-y: auto; }
-        .envelope.open .paper { transform: translateY(-160px); height: 300px; width: 280px; left: -20px; z-index: 15; box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+        .paper { position: absolute; top: 10px; left: 10px; width: 200px; height: 120px; background: white; border-radius: 5px; transition: 0.7s; z-index: 5; padding: 25px; box-sizing: border-box; overflow-y: auto; }
+        .envelope.open .paper { transform: translateY(-160px); height: 280px; width: 260px; left: -20px; z-index: 15; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
 
-        /* Gift Boxes */
-        .boxes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; max-width: 320px; }
+        /* Boxes */
+        .boxes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }
         .boxes-grid div:nth-child(5) { grid-column: span 2; justify-self: center; }
-        .gift-box { font-size: 75px; cursor: pointer; filter: drop-shadow(0 8px 15px rgba(255,143,163,0.3)); transition: 0.3s; }
+        .gift-box { font-size: 75px; cursor: pointer; transition: 0.3s; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1)); }
 
         /* Navigation */
         nav { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); padding: 10px 25px; border-radius: 40px; display: flex; gap: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); z-index: 1000; border: 2px solid #fff; }
         nav a { text-decoration: none; font-size: 24px; }
 
-        /* Modal - GLASSMORPHISM */
-        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(255, 143, 163, 0.2); backdrop-filter: blur(10px); z-index: 10000; align-items: center; justify-content: center; }
-        .modal-content { width: 85%; max-width: 320px; background: rgba(255, 255, 255, 0.95); border-radius: 30px; padding: 20px; text-align: center; box-shadow: 0 20px 50px rgba(255, 143, 163, 0.3); border: 2px solid white; }
-        #modal-img { width: 100%; border-radius: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        /* Modal - Refined for Photos */
+        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(255, 192, 203, 0.4); backdrop-filter: blur(8px); z-index: 10000; align-items: center; justify-content: center; }
+        .modal-content { width: 85%; max-width: 300px; background: white; border-radius: 25px; padding: 15px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        #modal-img { width: 100%; max-height: 350px; object-fit: contain; border-radius: 15px; }
 
-        /* Coupon Styling */
         .coupon {
-            background: white; border: 2px dashed var(--primary); padding: 20px; border-radius: 15px;
-            position: relative; margin-top: 15px; background-color: #fff9fa;
+            background: #fff; border: 2px dashed var(--primary); padding: 20px; border-radius: 15px; margin-top: 10px;
         }
-        .coupon::before, .coupon::after {
-            content: ''; position: absolute; width: 20px; height: 20px; background: white; border-radius: 50%; top: 50%; transform: translateY(-50%);
-        }
-        .coupon::before { left: -12px; border-right: 2px dashed var(--primary); }
-        .coupon::after { right: -12px; border-left: 2px dashed var(--primary); }
-        .coupon-title { font-size: 0.7rem; color: #999; letter-spacing: 2px; }
-        .coupon-value { font-size: 1.2rem; font-weight: 600; color: var(--primary); margin: 10px 0; }
-
-        .btn-close { margin-top: 15px; background: var(--primary); color: white; border: none; padding: 10px 25px; border-radius: 25px; cursor: pointer; font-family: 'Prompt'; font-weight: 600; }
+        .btn-close { margin-top: 15px; background: var(--primary); color: white; border: none; padding: 8px 25px; border-radius: 20px; cursor: pointer; font-family: 'Prompt'; }
     </style>
 </head>
 <body>
 
     <div id="login-page">
-        <h3 style="font-weight: 300; color: var(--primary); margin-bottom: 40px;">Please Enter Password ♡</h3>
+        <h3 style="font-weight: 300; color: var(--primary); margin-bottom: 30px;">Enter Password ♡</h3>
         <div class="pass-dots" id="pass-dots">
             <div class="dot"></div><div class="dot"></div><div class="dot"></div>
             <div class="dot"></div><div class="dot"></div><div class="dot"></div>
@@ -126,48 +117,41 @@
             <div class="key" onclick="addNum('1')">1</div><div class="key" onclick="addNum('2')">2</div><div class="key" onclick="addNum('3')">3</div>
             <div class="key" onclick="addNum('4')">4</div><div class="key" onclick="addNum('5')">5</div><div class="key" onclick="addNum('6')">6</div>
             <div class="key" onclick="addNum('7')">7</div><div class="key" onclick="addNum('8')">8</div><div class="key" onclick="addNum('9')">9</div>
-            <div style="width:80px"></div><div class="key" onclick="addNum('0')">0</div><div class="key" onclick="clearPass()" style="font-size:14px; color:var(--primary);">ลบ</div>
+            <div style="width:80px"></div><div class="key" onclick="addNum('0')">0</div><div class="key" onclick="clearPass()" style="font-size:14px; color:var(--primary);">Del</div>
         </div>
     </div>
 
     <div id="main-app">
         <section id="time-sec">
-            <div style="font-size: 1.1rem; color: var(--primary); margin-bottom: 30px; font-weight: 300;">คือเวลาที่เราเดินจับมือกันมาแล้วนะ...</div>
+            <div style="font-size: 1rem; color: var(--primary); margin-bottom: 20px;">เรารักกันมานานแค่ไหนแล้วนะ...</div>
             
-            <div class="timer-layout">
-                <div class="calendar-card">
-                    <div class="cal-top">YEARS</div>
-                    <div class="cal-body"><span class="cal-num" id="y">0</span><span class="cal-unit">ปี</span></div>
-                </div>
-                <div class="calendar-card">
-                    <div class="cal-top" style="background: #ffb7c5;">MONTHS</div>
-                    <div class="cal-body"><span class="cal-num" id="m">0</span><span class="cal-unit">เดือน</span></div>
-                </div>
-                <div class="calendar-card">
-                    <div class="cal-top" style="background: #ffc1cc;">DAYS</div>
-                    <div class="cal-body"><span class="cal-num" id="d">0</span><span class="cal-unit">วัน</span></div>
-                </div>
-
-                <div class="digital-clock">
-                    <div class="clock-label">Time Elapsed</div>
-                    <div class="clock-time" id="digital-clock-val">00:00:00</div>
-                </div>
+            <div class="calendar-wrap">
+                <div class="calendar-card"><span class="cal-top">YEARS</span><span class="cal-num" id="y">0</span><span class="cal-unit">ปี</span></div>
+                <div class="calendar-card"><span class="cal-top">MONTHS</span><span class="cal-num" id="m">0</span><span class="cal-unit">เดือน</span></div>
+                <div class="calendar-card"><span class="cal-top">DAYS</span><span class="cal-num" id="d">0</span><span class="cal-unit">วัน</span></div>
             </div>
 
-            <p style="margin-top: 40px; font-weight: 300; font-size: 0.9rem;">ขอบคุณที่อยู่ข้างกันในทุกนาทีนะ ❤️</p>
+            <div class="clock-container">
+                <div class="clock-unit"><span class="clock-val" id="ch">00</span></div>
+                <div class="clock-sep">:</div>
+                <div class="clock-unit"><span class="clock-val" id="cm">00</span></div>
+                <div class="clock-sep">:</div>
+                <div class="clock-unit"><span class="clock-val" id="cs">00</span></div>
+            </div>
+            <p style="font-size: 0.8rem; opacity: 0.6;">Every second counts with you ❤️</p>
         </section>
 
         <section id="photo-sec">
-            <h2 style="font-family: 'Caveat'; font-size: 2.8rem; color: var(--primary); margin:0;">Our Moments</h2>
+            <h2 style="font-family: 'Caveat'; font-size: 2.5rem; color: var(--primary); margin:0; text-align: center;">Happy First Anniversary</h2>
             <div class="number-one-grid">
-                <img src="photo1.jpg" class="img-item p1" onclick="zoomImg(this, 'ครั้งแรกที่เจอเธอก็ตกหลุมรักเลย')">
-                <img src="photo2.jpg" class="img-item p2" onclick="zoomImg(this, 'รอยยิ้มนี้ของเธอคือที่สุด')">
-                <img src="photo3.jpg" class="img-item p3" onclick="zoomImg(this, 'ขอบคุณที่คอยอยู่ข้างๆ กัน')">
-                <img src="photo4.jpg" class="img-item p4" onclick="zoomImg(this, 'จะดูแลเธอให้ดีที่สุดเลย')">
-                <img src="photo5.jpg" class="img-item p5" onclick="zoomImg(this, 'ไปเที่ยวด้วยกันอีกเยอะๆ นะ')">
-                <img src="photo6.jpg" class="img-item p6" onclick="zoomImg(this, 'รักเวอร์ชันที่เป็นเธอที่สุด')">
-                <img src="photo7.jpg" class="img-item p7" onclick="zoomImg(this, 'Happy Anniversary นะคะ')">
-                <img src="photo8.jpg" class="img-item p8" onclick="zoomImg(this, 'ต้าวความรักของเค้า')">
+                <img src="photo1.jpg" class="img-item p1" onclick="zoomImg(this)">
+                <img src="photo2.jpg" class="img-item p2" onclick="zoomImg(this)">
+                <img src="photo3.jpg" class="img-item p3" onclick="zoomImg(this)">
+                <img src="photo4.jpg" class="img-item p4" onclick="zoomImg(this)">
+                <img src="photo5.jpg" class="img-item p5" onclick="zoomImg(this)">
+                <img src="photo6.jpg" class="img-item p6" onclick="zoomImg(this)">
+                <img src="photo7.jpg" class="img-item p7" onclick="zoomImg(this)">
+                <img src="photo8.jpg" class="img-item p8" onclick="zoomImg(this)">
             </div>
         </section>
 
@@ -175,11 +159,10 @@
             <div class="envelope-container">
                 <div class="envelope" id="env" onclick="openLetter()">
                     <div class="paper" id="paper">
-                        <div id="typewriter" style="font-size: 0.9rem; line-height: 1.8; color: #555;"></div>
+                        <div id="typewriter" style="font-size: 0.85rem; line-height: 1.8; color: #555;"></div>
                     </div>
                 </div>
             </div>
-            <p style="margin-top: 40px; color: var(--primary);">แตะซองจดหมายเพื่ออ่านนะ ♡</p>
         </section>
 
         <section id="fun-sec">
@@ -206,30 +189,31 @@
             <img id="modal-img" src="" style="display: none;">
             <div id="coupon-area" style="display: none;">
                 <div class="coupon">
-                    <div class="coupon-title">LOVE COUPON</div>
-                    <div class="coupon-value" id="coupon-text"></div>
-                    <div style="font-size: 0.6rem; color: #ccc;">*ใช้ได้กับที่รักคนเดียวเท่านั้น</div>
+                    <div style="font-size: 0.7rem; color: #aaa;">LOVE COUPON</div>
+                    <div id="coupon-text" style="font-size: 1.2rem; font-weight: 600; color: var(--primary); margin: 10px 0;"></div>
+                    <div style="font-size: 0.6rem; color: #ccc;">*แคปหน้าจอเพื่อใช้สิทธิ์*</div>
                 </div>
             </div>
-            <h3 id="modal-title" style="color: var(--primary); margin: 5px 0; font-size: 1.1rem;"></h3>
-            <p id="modal-body" style="font-size: 0.85rem; color: #777;"></p>
-            <button class="btn-close" onclick="closeModal()">ปิดหน้าต่าง</button>
+            <button class="btn-close" onclick="closeModal()">ปิด</button>
         </div>
     </div>
 
     <audio id="bgm" loop><source src="song.mp3" type="audio/mpeg"></audio>
+    <audio id="click-sound"><source src="https://www.soundjay.com/buttons/button-16.mp3" type="audio/mpeg"></audio>
 
     <script>
         let pass = "";
-        const target = "091262"; // รหัสของคุณ
+        const target = "091262";
 
         function addNum(n) {
+            document.getElementById('click-sound').currentTime = 0;
+            document.getElementById('click-sound').play();
             if(pass.length < 6) {
                 pass += n;
                 document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('active', i < pass.length));
                 if(pass.length === 6) {
                     if(pass === target) {
-                        document.getElementById('bgm').play().catch(e => console.log("Audio play deferred"));
+                        document.getElementById('bgm').play().catch(() => {});
                         document.getElementById('login-page').style.display = 'none';
                         document.getElementById('main-app').style.display = 'block';
                         startTimer();
@@ -248,31 +232,25 @@
                 const now = new Date();
                 const diff = now - start;
                 const daysTotal = Math.floor(diff / (1000*60*60*24));
-                
                 document.getElementById('y').innerText = Math.floor(daysTotal/365);
                 document.getElementById('m').innerText = Math.floor((daysTotal%365)/30);
                 document.getElementById('d').innerText = daysTotal % 30;
-
-                const h = String(Math.floor((diff/(1000*60*60))%24)).padStart(2,'0');
-                const mn = String(Math.floor((diff/(1000*60))%60)).padStart(2,'0');
-                const s = String(Math.floor((diff/1000)%60)).padStart(2,'0');
-                document.getElementById('digital-clock-val').innerText = `${h}:${mn}:${s}`;
+                document.getElementById('ch').innerText = String(Math.floor((diff/(1000*60*60))%24)).padStart(2,'0');
+                document.getElementById('cm').innerText = String(Math.floor((diff/(1000*60))%60)).padStart(2,'0');
+                document.getElementById('cs').innerText = String(Math.floor((diff/1000)%60)).padStart(2,'0');
             }, 1000);
         }
 
-        function zoomImg(el, txt) {
+        function zoomImg(el) {
             const modal = document.getElementById('modal');
             const img = document.getElementById('modal-img');
-            const cp = document.getElementById('coupon-area');
             img.src = el.src;
-            img.style.display = 'block';
-            cp.style.display = 'none';
-            document.getElementById('modal-title').innerText = "Our Memory";
-            document.getElementById('modal-body').innerText = txt;
+            img.style.display = 'inline-block';
+            document.getElementById('coupon-area').style.display = 'none';
             modal.style.display = 'flex';
         }
 
-        const msg = "ถึง...เธอที่แสนดี ❤️\n\nแป๊บเดียวเราก็รักกันมา 1 ปีแล้วนะ ขอบคุณที่เข้ามาเป็นความสุขให้เค้าในทุกวัน\n\nเค้าขอโทษถ้าบางครั้งเอาแต่ใจ แต่สัญญาว่าจากนี้จะเป็นคนที่ดีขึ้น จะไม่ยุ่งกับสิ่งไม่ดีตลอดชีวิต และจะรักเธอให้มากขึ้นในทุกๆ วันเลยนะ อยู่ฉลองด้วยกันแบบนี้ไปทุกปีเลยนะที่รัก ♡";
+        const msg = "ถึง...เธอที่รักที่สุด ❤️\n\nสุขสันต์วันครบรอบ 1 ปีนะ ขอบคุณที่อยู่เคียงข้างกัน และทำให้ทุกวันมีความหมาย\n\nเค้าสัญญาว่าจะเป็นคนที่ดีขึ้นในทุกวัน และที่สำคัญ เค้าจะไม่ยุ่งเกี่ยวกับสิ่งไม่ดีตลอดชีวิต เพื่ออนาคตที่สดใสของเรานะ\n\nรักเธอที่สุดเลยเจ้าความรัก ♡";
         let isTyped = false;
         function openLetter() {
             document.getElementById('env').classList.add('open');
@@ -289,18 +267,15 @@
             }
         }
 
-        const prizes = ["คูปองตามใจ 1 วัน ✨", "คูปองบุฟเฟต์ฟรี 1 มื้อ 🥩", "คูปองหอมแจ้ม 10 ที 😘", "คูปองหยุดโกรธทันที 🥺", "คูปองนวดฟรี 30 นาที 💆‍♂️"];
+        const prizes = ["คูปองตามใจ 1 วัน ✨", "คูปองบุฟเฟต์ฟรี 1 มื้อ 🥩", "คูปองหอมแจ้ม 10 ที 😘", "คูปองยกโทษให้ 1 ครั้ง 🥺", "คูปองนวดไหล่ 30 นาที 💆‍♂️"];
         function pickBox(el) {
             el.animate([{transform:'scale(1)'}, {transform:'scale(1.2) rotate(10deg)'}, {transform:'scale(1)'}], {duration:300, iterations:3});
             setTimeout(() => {
                 const prize = prizes[Math.floor(Math.random()*prizes.length)];
-                const modal = document.getElementById('modal');
                 document.getElementById('modal-img').style.display = 'none';
                 document.getElementById('coupon-area').style.display = 'block';
                 document.getElementById('coupon-text').innerText = prize;
-                document.getElementById('modal-title').innerText = "You Unlocked a Gift!";
-                document.getElementById('modal-body').innerText = "แคปหน้าจอนี้ไว้มาแลกกับเค้านะ!";
-                modal.style.display = 'flex';
+                document.getElementById('modal').style.display = 'flex';
                 el.innerText = "✨";
             }, 1000);
         }

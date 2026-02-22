@@ -88,25 +88,21 @@
         .paper { position: absolute; top: 10px; left: 10px; width: 200px; height: 120px; background: white; border-radius: 5px; transition: 0.7s; z-index: 5; padding: 25px; box-sizing: border-box; overflow-y: auto; }
         .envelope.open .paper { transform: translateY(-160px); height: 280px; width: 260px; left: -20px; z-index: 15; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
 
-        /* Gift Boxes (Random layout logic) */
+        /* Gift Boxes - Adjusted for 5 items */
         .boxes-grid { 
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 40px; 
-            width: 250px;
-            margin: 0 auto;
+            display: flex; flex-wrap: wrap; 
+            justify-content: center; gap: 30px; 
+            max-width: 300px; margin: 0 auto; 
         }
         .gift-box { 
-            font-size: 70px; 
-            cursor: pointer; 
-            transition: 0.3s; 
-            display: inline-block;
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
+            font-size: 65px; cursor: pointer; transition: 0.3s; 
+            display: inline-block; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
         }
-        /* Make them look "accidentally" placed */
-        .gift-box:nth-child(odd) { transform: rotate(-10deg) translateY(10px); }
-        .gift-box:nth-child(even) { transform: rotate(12deg) translateY(-10px); }
-        .gift-box:nth-child(3n) { transform: rotate(5deg) translateX(15px); }
+        .gift-box:nth-child(1) { transform: rotate(-5deg) translateY(5px); }
+        .gift-box:nth-child(2) { transform: rotate(8deg) translateY(-5px); }
+        .gift-box:nth-child(3) { transform: rotate(-3deg) translateX(10px); }
+        .gift-box:nth-child(4) { transform: rotate(10deg) translateY(8px); }
+        .gift-box:nth-child(5) { transform: rotate(-12deg); }
 
         .box-shake { animation: box-shake 0.8s ease-in-out; }
         @keyframes box-shake {
@@ -117,7 +113,7 @@
             80% { transform: scale(1.1) rotate(-10deg); }
         }
 
-        /* --- TICKET DESIGN (PREVIOUS VERSION) --- */
+        /* --- TICKET DESIGN (STAY THE SAME) --- */
         .ticket {
             width: 280px; background: white; border-radius: 15px; 
             overflow: hidden; box-shadow: 0 15px 35px rgba(255, 143, 163, 0.3);
@@ -128,54 +124,49 @@
         .ticket-prize { font-size: 1.3rem; font-weight: 600; color: var(--primary); margin: 5px 0; }
         .ticket-footer { padding: 15px; font-size: 0.6rem; color: #bbb; }
 
-        /* --- POLAROID DESIGN --- */
+        /* --- POLAROID DESIGN (RESIZED & STRAIGHT) --- */
         .polaroid {
             background: white; 
-            padding: 15px 15px 50px 15px;
-            box-shadow: 5px 15px 35px rgba(0,0,0,0.15);
-            border-radius: 3px; 
-            max-width: 280px; 
+            padding: 10px 10px 40px 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-radius: 2px; 
+            max-width: 220px; /* Smaller Size */
             margin: 0 auto;
-            transform: rotate(-2deg); /* Slightly tilted for cute look */
-            border: 1px solid #eee;
+            transform: rotate(0deg); /* No Tilt */
+            border: 1px solid #f0f0f0;
             position: relative;
-            z-index: 10005; /* Keep above emojis */
+            z-index: 10005;
         }
-        .polaroid img { 
-            width: 100%; height: auto; display: block; 
-            filter: contrast(1.05) saturate(1.1); 
-        }
+        .polaroid img { width: 100%; height: auto; display: block; }
         .polaroid-text { 
-            font-family: 'Caveat', cursive; font-size: 1.6rem; 
-            color: #444; margin-top: 20px; font-weight: 700;
+            font-family: 'Kanit', sans-serif; font-size: 1rem; 
+            color: #555; margin-top: 15px; font-weight: 400;
         }
 
         /* Modal (FRESH & BRIGHT) */
         .modal { 
             display: none; position: fixed; top:0; left:0; width:100%; height:100%; 
-            background: rgba(255, 255, 255, 0.9); /* Lighter & Brighter */
-            backdrop-filter: blur(5px); z-index: 10000; align-items: center; justify-content: center; 
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(6px); z-index: 10000; align-items: center; justify-content: center; 
         }
         .modal-content { width: 95%; text-align: center; position: relative; }
 
-        /* Floating Emojis Animation - Behind the polaroid */
         .emoji-fly {
-            position: absolute; pointer-events: none; font-size: 30px;
-            animation: flyUp 2.5s ease-out forwards; z-index: 10001;
+            position: absolute; pointer-events: none; font-size: 28px;
+            animation: flyUp 2.2s ease-out forwards; z-index: 10001;
         }
         @keyframes flyUp {
-            0% { transform: translateY(100px) scale(0.5); opacity: 0; }
+            0% { transform: translateY(50px) scale(0.5); opacity: 0; }
             20% { opacity: 1; }
-            100% { transform: translateY(-350px) scale(1.5) rotate(20deg); opacity: 0; }
+            100% { transform: translateY(-300px) scale(1.4); opacity: 0; }
         }
 
         nav { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.95); padding: 10px 25px; border-radius: 40px; display: flex; gap: 20px; z-index: 1000; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
         nav a { text-decoration: none; font-size: 24px; }
         .btn-close { 
-            background: var(--primary); color: white; border: none; padding: 12px 35px; 
-            border-radius: 25px; cursor: pointer; font-family: 'Prompt', sans-serif; margin-top: 40px; 
+            background: var(--primary); color: white; border: none; padding: 10px 30px; 
+            border-radius: 25px; cursor: pointer; font-family: 'Prompt', sans-serif; margin-top: 30px; 
             box-shadow: 0 5px 15px rgba(255, 143, 163, 0.3);
-            font-weight: 600;
         }
     </style>
 </head>
@@ -235,7 +226,6 @@
         <section id="fun-sec">
             <h3 style="color: var(--primary); margin-bottom: 40px;">เลือกของขวัญของคุณ! 🎁</h3>
             <div class="boxes-grid">
-                <div class="gift-box" onclick="pickBox(this)">🎁</div>
                 <div class="gift-box" onclick="pickBox(this)">🎁</div>
                 <div class="gift-box" onclick="pickBox(this)">🎁</div>
                 <div class="gift-box" onclick="pickBox(this)">🎁</div>
@@ -319,16 +309,16 @@
         }
 
         function createEmojiEffect() {
-            const emojis = ['❤️', '💖', '✨', '🌸', '🥰', '☁️', '🌈'];
-            for(let i=0; i<12; i++) {
+            const emojis = ['❤️', '💖', '✨', '🌸', '🥰'];
+            for(let i=0; i<10; i++) {
                 setTimeout(() => {
                     const emoji = document.createElement('div');
                     emoji.className = 'emoji-fly';
                     emoji.innerText = emojis[Math.floor(Math.random()*emojis.length)];
                     emoji.style.left = Math.random() * 80 + 10 + '%';
-                    emoji.style.bottom = '20%';
+                    emoji.style.bottom = '30%';
                     document.getElementById('modal-box').appendChild(emoji);
-                    setTimeout(() => emoji.remove(), 2500);
+                    setTimeout(() => emoji.remove(), 2200);
                 }, i * 200);
             }
         }

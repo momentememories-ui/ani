@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy 1st Anniversary ♡</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&family=Caveat:wght@700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&family=Caveat:wght@700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #ff8fa3;
             --secondary: #ffcad4;
             --bg: #fff5f7;
             --text: #7a5c61;
-            --led: #ff2d55;
         }
 
         body, html {
@@ -31,6 +30,8 @@
             background: var(--bg); z-index: 9999;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
+        .shake { animation: shake 0.4s; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
         .pass-dots { display: flex; gap: 15px; margin-bottom: 30px; }
         .dot { width: 15px; height: 15px; border: 2px solid var(--primary); border-radius: 50%; transition: 0.3s; }
         .dot.active { background: var(--primary); transform: scale(1.2); box-shadow: 0 0 10px var(--primary); }
@@ -47,73 +48,103 @@
         #main-app { display: none; padding-bottom: 120px; }
         section { min-height: 100vh; padding: 60px 20px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
 
-        /* --- New Digital Clock Design --- */
-        .digital-watch {
-            background: #333; padding: 20px 30px; border-radius: 20px;
-            box-shadow: inset 0 0 15px #000, 0 10px 25px rgba(0,0,0,0.2);
-            border: 6px solid #444; position: relative;
-        }
-        .watch-screen {
-            background: #1a1a1a; padding: 15px; border-radius: 10px;
-            display: flex; align-items: baseline; gap: 5px;
-            border: 2px solid #222;
-        }
-        .watch-time { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: var(--led); text-shadow: 0 0 10px var(--led); }
-        .watch-label { font-size: 0.6rem; color: #666; text-transform: uppercase; text-align: center; }
-
-        /* Calendar Cards */
-        .calendar-wrap { display: flex; gap: 10px; margin-bottom: 25px; }
+        /* Clock & Calendar */
+        .calendar-wrap { display: flex; gap: 10px; margin-bottom: 10px; }
         .calendar-card {
-            background: white; width: 85px; height: 100px; border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #eee; text-align: center;
+            background: white; width: 90px; height: 110px; border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #eee;
         }
-        .cal-top { background: var(--primary); color: white; font-size: 0.7rem; padding: 5px 0; font-weight: 600; }
-        .cal-num { font-size: 1.6rem; font-weight: 600; margin-top: 10px; display: block; }
-        .cal-unit { font-size: 0.6rem; color: #999; }
+        .cal-top { background: var(--primary); height: 28px; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; }
+        .cal-num { font-size: 1.5rem; font-weight: 600; color: var(--text); padding-top: 15px; display: block; text-align: center; }
+        .cal-unit { font-size: 0.6rem; color: #bbb; display: block; text-align: center; }
 
-        /* --- Photo Grid with Captions --- */
-        .photo-container { text-align: center; }
-        .number-one-grid { display: grid; grid-template-columns: repeat(3, 100px); grid-template-rows: repeat(5, auto); gap: 15px; margin-top: 30px; }
-        .img-wrap { display: flex; flex-direction: column; align-items: center; }
-        .img-item { width: 100px; height: 100px; object-fit: cover; border-radius: 10px; border: 3px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer; }
-        .caption { font-size: 0.65rem; color: var(--text); margin-top: 5px; font-weight: 400; }
-        
-        /* Position as Number 1 */
-        .p1 { grid-column: 2; grid-row: 1; } .p2 { grid-column: 2; grid-row: 2; } .p3 { grid-column: 2; grid-row: 3; } .p4 { grid-column: 2; grid-row: 4; } .p5 { grid-column: 1; grid-row: 5; } .p6 { grid-column: 2; grid-row: 5; } .p7 { grid-column: 3; grid-row: 5; } .p8 { grid-column: 1; grid-row: 2; transform: rotate(-5deg); }
+        .clock-container {
+            background: #fff; padding: 15px 25px; border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(255, 143, 163, 0.2);
+            border: 4px solid var(--secondary); display: flex; gap: 10px; align-items: center; margin: 20px 0;
+        }
+        .clock-val { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--primary); }
 
-        /* --- Envelope --- */
+        /* --- PHOTO GRID (Number 1 Shape) --- */
+        .number-one-grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 85px); 
+            grid-template-rows: repeat(5, 85px); 
+            gap: 15px; 
+            margin-top: 30px; 
+        }
+        .img-item { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; border: 3px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer; }
+        /* Positioning for Number 1 */
+        .pos1 { grid-column: 2; grid-row: 1; }
+        .pos2 { grid-column: 2; grid-row: 2; }
+        .pos3 { grid-column: 2; grid-row: 3; }
+        .pos4 { grid-column: 2; grid-row: 4; }
+        .pos5 { grid-column: 1; grid-row: 5; }
+        .pos6 { grid-column: 2; grid-row: 5; }
+        .pos7 { grid-column: 3; grid-row: 5; }
+        .pos8 { grid-column: 1; grid-row: 2; } /* หัวเลข 1 */
+
+        /* Envelope */
         .envelope-container { position: relative; height: 350px; display: flex; align-items: center; justify-content: center; width: 100%; }
-        .envelope { width: 220px; height: 140px; background: #ffc1cc; border-radius: 0 0 10px 10px; position: relative; cursor: pointer; margin-top: 100px; z-index: 10; }
+        .envelope { width: 220px; height: 140px; background: #ffc1cc; border-radius: 0 0 10px 10px; position: relative; cursor: pointer; z-index: 10; margin-top: 100px; }
         .envelope::before { content: ''; position: absolute; top: -90px; left: 0; border-left: 110px solid transparent; border-right: 110px solid transparent; border-bottom: 90px solid #ff8fa3; transition: 0.5s; z-index: 12; transform-origin: bottom; }
         .envelope.open::before { transform: rotateX(180deg); z-index: 1; }
-        .paper { position: absolute; top: 10px; left: 10px; width: 200px; height: 120px; background: white; border-radius: 5px; transition: 0.7s; z-index: 5; padding: 20px; box-sizing: border-box; overflow-y: auto; }
+        .paper { position: absolute; top: 10px; left: 10px; width: 200px; height: 120px; background: white; border-radius: 5px; transition: 0.7s; z-index: 5; padding: 25px; box-sizing: border-box; overflow-y: auto; }
         .envelope.open .paper { transform: translateY(-160px); height: 280px; width: 260px; left: -20px; z-index: 15; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
 
-        /* --- Realistic Coupon --- */
-        .coupon-card {
-            background: #fff; border: 2px dashed var(--primary); border-radius: 15px;
-            padding: 20px; position: relative; overflow: hidden; margin: 10px 0;
-            background-image: radial-gradient(circle at 0 50%, transparent 10px, #fff 10px), radial-gradient(circle at 100% 50%, transparent 10px, #fff 10px);
-        }
-        .coupon-card::before { content: 'LOVE TICKET'; position: absolute; top: 5px; left: 50%; transform: translateX(-50%); font-size: 0.6rem; color: var(--secondary); letter-spacing: 3px; }
-        .coupon-val { font-size: 1.3rem; font-weight: 600; color: var(--primary); margin: 15px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 10px 0; }
+        /* Gift Boxes */
+        .boxes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }
+        .gift-box { font-size: 75px; cursor: pointer; transition: 0.3s; }
 
-        /* Navigation */
-        nav { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); padding: 10px 25px; border-radius: 40px; display: flex; gap: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); z-index: 1000; border: 2px solid #fff; }
-        nav a { text-decoration: none; font-size: 24px; }
+        /* --- REAL COUPON DESIGN --- */
+        .coupon-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid var(--primary);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .coupon-top {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+        .coupon-body {
+            padding: 25px 15px;
+            background-image: radial-gradient(circle at 0% 50%, transparent 10px, white 10px), 
+                              radial-gradient(circle at 100% 50%, transparent 10px, white 10px);
+        }
+        .coupon-line {
+            border-top: 2px dashed #ffcad4;
+            margin: 15px 0;
+            position: relative;
+        }
+        .coupon-line::before, .coupon-line::after {
+            content: ''; width: 20px; height: 20px; background: var(--bg);
+            border-radius: 50%; position: absolute; top: -11px;
+        }
+        .coupon-line::before { left: -25px; border-right: 2px solid var(--primary); }
+        .coupon-line::after { right: -25px; border-left: 2px solid var(--primary); }
 
         /* Modal */
-        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(255,192,203,0.3); backdrop-filter: blur(8px); z-index: 10000; align-items: center; justify-content: center; }
-        .modal-content { width: 85%; max-width: 300px; background: white; border-radius: 25px; padding: 20px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        #modal-img { width: 100%; border-radius: 15px; max-height: 300px; object-fit: contain; }
-        .btn-close { margin-top: 15px; background: var(--primary); color: white; border: none; padding: 10px 25px; border-radius: 25px; cursor: pointer; font-family: 'Prompt'; }
+        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 10000; align-items: center; justify-content: center; }
+        .modal-content { width: 85%; max-width: 350px; text-align: center; }
+        #modal-img { width: 100%; border-radius: 15px; border: 5px solid white; margin-bottom: 15px; }
+        .img-caption { color: white; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 10px; font-size: 0.9rem; margin-bottom: 10px; }
+
+        nav { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.9); padding: 10px 25px; border-radius: 40px; display: flex; gap: 20px; z-index: 1000; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        nav a { text-decoration: none; font-size: 24px; }
+        .btn-close { background: var(--primary); color: white; border: none; padding: 10px 30px; border-radius: 25px; cursor: pointer; font-family: 'Prompt'; }
     </style>
 </head>
 <body>
 
     <div id="login-page">
         <h3 style="font-weight: 300; color: var(--primary); margin-bottom: 30px;">Enter Password ♡</h3>
-        <div class="pass-dots" id="pass-dots">
+        <div class="pass-dots">
             <div class="dot"></div><div class="dot"></div><div class="dot"></div>
             <div class="dot"></div><div class="dot"></div><div class="dot"></div>
         </div>
@@ -121,63 +152,52 @@
             <div class="key" onclick="addNum('1')">1</div><div class="key" onclick="addNum('2')">2</div><div class="key" onclick="addNum('3')">3</div>
             <div class="key" onclick="addNum('4')">4</div><div class="key" onclick="addNum('5')">5</div><div class="key" onclick="addNum('6')">6</div>
             <div class="key" onclick="addNum('7')">7</div><div class="key" onclick="addNum('8')">8</div><div class="key" onclick="addNum('9')">9</div>
-            <div style="width:80px"></div><div class="key" onclick="addNum('0')">0</div><div class="key" onclick="clearPass()" style="font-size:14px; color:var(--primary);">ลบ</div>
+            <div style="width:80px"></div><div class="key" onclick="addNum('0')">0</div><div class="key" onclick="clearPass()" style="font-size:14px; color:var(--primary);">Del</div>
         </div>
     </div>
 
     <div id="main-app">
         <section id="time-sec">
+            <div style="font-size: 1rem; color: var(--primary); margin-bottom: 20px;">เราเดินมาด้วยกันแล้ว...</div>
             <div class="calendar-wrap">
                 <div class="calendar-card"><span class="cal-top">YEARS</span><span class="cal-num" id="y">0</span><span class="cal-unit">ปี</span></div>
                 <div class="calendar-card"><span class="cal-top">MONTHS</span><span class="cal-num" id="m">0</span><span class="cal-unit">เดือน</span></div>
                 <div class="calendar-card"><span class="cal-top">DAYS</span><span class="cal-num" id="d">0</span><span class="cal-unit">วัน</span></div>
             </div>
-
-            <div class="digital-watch">
-                <div class="watch-label" style="color: #888; margin-bottom: 5px;">Digital Love Counter</div>
-                <div class="watch-screen">
-                    <span class="watch-time" id="ch">00</span>
-                    <span style="color:var(--led); font-family:serif; font-weight:bold;">:</span>
-                    <span class="watch-time" id="cm">00</span>
-                    <span style="color:var(--led); font-family:serif; font-weight:bold;">:</span>
-                    <span class="watch-time" id="cs" style="font-size: 1.5rem;">00</span>
-                </div>
+            <div class="clock-container">
+                <span class="clock-val" id="ch">00</span> : <span class="clock-val" id="cm">00</span> : <span class="clock-val" id="cs">00</span>
             </div>
-            <p style="margin-top: 25px; font-size: 0.9rem;">ทุกวินาทีมีค่าเมื่ออยู่กับเธอ ❤️</p>
         </section>
 
         <section id="photo-sec">
-            <h2 style="font-family: 'Caveat'; font-size: 2.5rem; color: var(--primary); margin:0;">Happy 1st Anniversary</h2>
+            <h2 style="font-family: 'Caveat'; font-size: 2.5rem; color: var(--primary); margin-bottom: 10px;">Happy 1st Anniversary</h2>
             <div class="number-one-grid">
-                <div class="img-wrap p1"><img src="photo1.jpg" class="img-item" onclick="zoomImg(this)"><span class="caption">วันแรกที่เจอ</span></div>
-                <div class="img-wrap p2"><img src="photo2.jpg" class="img-item" onclick="zoomImg(this)"><span class="caption">เดทแรกของเรา</span></div>
-                <div class="img-wrap p3"><img src="photo3.jpg" class="img-item" onclick="zoomImg(this)"><span class="caption">รอยยิ้มของเธอ</span></div>
-                <div class="img-wrap p4"><img src="photo4.jpg" class="img-item" onclick="zoomImg(this)"><span class="caption">ความทรงจำดีๆ</span></div>
-                <div class="img-wrap p5"><img src="photo5.jpg" class="img-item" onclick="zoomImg(this)"><span class="caption">ไปเที่ยวด้วยกัน</span></div>
-                <div class="img-wrap p6"><img src="photo6.jpg" class="img-item" onclick="zoomImg(this)"><span class="caption">จับมือกันไว้</span></div>
-                <div class="img-wrap p7"><img src="photo7.jpg" class="img-item" onclick="zoomImg(this)"><span class="caption">รักเธอที่สุด</span></div>
-                <div class="img-wrap p8"><img src="photo8.jpg" class="img-item" onclick="zoomImg(this)"><span class="caption">ต้าวความรัก</span></div>
+                <img src="photo1.jpg" class="img-item pos1" onclick="zoomImg(this, 'รูปตอนเราเจอกันครั้งแรก 💓')">
+                <img src="photo2.jpg" class="img-item pos2" onclick="zoomImg(this, 'รอยยิ้มนี้ที่เค้าหลงรัก 😊')">
+                <img src="photo3.jpg" class="img-item pos3" onclick="zoomImg(this, 'ไปเที่ยวด้วยกันสนุกมากเลย ✈️')">
+                <img src="photo4.jpg" class="img-item pos4" onclick="zoomImg(this, 'ขอบคุณที่คอยซัพพอร์ตกันนะ 🤝')">
+                <img src="photo5.jpg" class="img-item pos5" onclick="zoomImg(this, 'มื้อนี้อร่อยเพราะมีเธอ 🍲')">
+                <img src="photo6.jpg" class="img-item pos6" onclick="zoomImg(this, 'รูปนี้เธอน่ารักที่สุดเลย! 😍')">
+                <img src="photo7.jpg" class="img-item pos7" onclick="zoomImg(this, 'จะอยู่ข้างกันแบบนี้ตลอดไปนะ ♾️')">
+                <img src="photo8.jpg" class="img-item pos8" onclick="zoomImg(this, 'เย้! ครบรอบ 1 ปีแล้ว 🎂')">
             </div>
         </section>
 
         <section id="letter-sec">
             <div class="envelope-container">
                 <div class="envelope" id="env" onclick="openLetter()">
-                    <div class="paper" id="paper">
-                        <div id="typewriter" style="font-size: 0.85rem; line-height: 1.8; color: #555;"></div>
-                    </div>
+                    <div class="paper" id="paper"><div id="typewriter"></div></div>
                 </div>
             </div>
         </section>
 
         <section id="fun-sec">
             <h3 style="color: var(--primary); margin-bottom: 40px;">Choose Your Gift! 🎁</h3>
-            <div class="keypad" style="grid-template-columns: repeat(2, 1fr); gap: 30px;">
-                <div style="font-size: 70px; cursor:pointer;" onclick="pickBox(this)">🎁</div>
-                <div style="font-size: 70px; cursor:pointer;" onclick="pickBox(this)">🎁</div>
-                <div style="font-size: 70px; cursor:pointer;" onclick="pickBox(this)">🎁</div>
-                <div style="font-size: 70px; cursor:pointer;" onclick="pickBox(this)">🎁</div>
-                <div style="font-size: 70px; cursor:pointer; grid-column: span 2; text-align:center;" onclick="pickBox(this)">🎁</div>
+            <div class="boxes-grid">
+                <div class="gift-box" onclick="pickBox(this)">🎁</div>
+                <div class="gift-box" onclick="pickBox(this)">🎁</div>
+                <div class="gift-box" onclick="pickBox(this)">🎁</div>
+                <div class="gift-box" onclick="pickBox(this)">🎁</div>
             </div>
         </section>
 
@@ -189,33 +209,39 @@
         </nav>
     </div>
 
-    <div id="modal" class="modal" onclick="closeModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <img id="modal-img" src="" style="display: none;">
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div id="photo-area">
+                <img id="modal-img" src="">
+                <div id="img-caption" class="img-caption"></div>
+            </div>
+            
             <div id="coupon-area" style="display: none;">
                 <div class="coupon-card">
-                    <div id="coupon-text" class="coupon-val"></div>
-                    <div style="font-size: 0.6rem; color: #999;">PRESENTED TO MY SPECIAL ONE</div>
+                    <div class="coupon-top">LOVE COUPON</div>
+                    <div class="coupon-body">
+                        <div id="coupon-text" style="font-size: 1.3rem; font-weight: 600; color: #ff4d6d;"></div>
+                        <div class="coupon-line"></div>
+                        <div style="font-size: 0.7rem; color: #999;">ใช้ได้เฉพาะกับแฟนคนนี้เท่านั้น ❤️<br>หมดอายุ: เมื่อเราเลิกรักกัน</div>
+                    </div>
                 </div>
-                <p style="font-size: 0.7rem; color: var(--primary);">แคปหน้าจอเก็บไว้แลกนะจ๊ะ!</p>
+                <p style="color: white; font-size: 0.8rem; margin-top: 15px;">(แคปหน้าจอเก็บไว้นะครับ!)</p>
             </div>
+            <br>
             <button class="btn-close" onclick="closeModal()">ปิด</button>
         </div>
     </div>
 
     <audio id="bgm" loop><source src="song.mp3" type="audio/mpeg"></audio>
-    <audio id="click-sound"><source src="https://www.soundjay.com/buttons/button-16.mp3" type="audio/mpeg"></audio>
 
     <script>
         let pass = "";
-        const target = "091262";
+        const target = "091262"; // รหัสผ่านเดิมที่คุณตั้งไว้
 
         function addNum(n) {
-            document.getElementById('click-sound').currentTime = 0;
-            document.getElementById('click-sound').play();
             if(pass.length < 6) {
                 pass += n;
-                document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('active', i < pass.length));
+                updateDots();
                 if(pass.length === 6) {
                     if(pass === target) {
                         document.getElementById('bgm').play().catch(() => {});
@@ -223,45 +249,43 @@
                         document.getElementById('main-app').style.display = 'block';
                         startTimer();
                     } else {
-                        document.getElementById('login-page').style.backgroundColor = '#ffdee2';
-                        setTimeout(() => { document.getElementById('login-page').style.backgroundColor = 'var(--bg)'; clearPass(); }, 400);
+                        document.getElementById('login-page').classList.add('shake');
+                        setTimeout(() => { document.getElementById('login-page').classList.remove('shake'); clearPass(); }, 400);
                     }
                 }
             }
         }
-        function clearPass() { pass = ""; document.querySelectorAll('.dot').forEach(d => d.classList.remove('active')); }
+        function updateDots() { document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('active', i < pass.length)); }
+        function clearPass() { pass = ""; updateDots(); }
 
         function startTimer() {
-            const start = new Date("2019-12-09T00:00:00"); 
+            const start = new Date("2019-12-09T00:00:00");
             setInterval(() => {
                 const now = new Date();
                 const diff = now - start;
-                const daysTotal = Math.floor(diff / (1000*60*60*24));
-                document.getElementById('y').innerText = Math.floor(daysTotal/365);
-                document.getElementById('m').innerText = Math.floor((daysTotal%365)/30);
-                document.getElementById('d').innerText = daysTotal % 30;
+                const dTotal = Math.floor(diff / (1000*60*60*24));
+                document.getElementById('y').innerText = Math.floor(dTotal/365);
+                document.getElementById('m').innerText = Math.floor((dTotal%365)/30);
+                document.getElementById('d').innerText = dTotal % 30;
                 document.getElementById('ch').innerText = String(Math.floor((diff/(1000*60*60))%24)).padStart(2,'0');
                 document.getElementById('cm').innerText = String(Math.floor((diff/(1000*60))%60)).padStart(2,'0');
                 document.getElementById('cs').innerText = String(Math.floor((diff/1000)%60)).padStart(2,'0');
             }, 1000);
         }
 
-        function zoomImg(el) {
-            const modal = document.getElementById('modal');
-            const img = document.getElementById('modal-img');
-            img.src = el.src;
-            img.style.display = 'inline-block';
+        function zoomImg(el, caption) {
+            document.getElementById('photo-area').style.display = 'block';
             document.getElementById('coupon-area').style.display = 'none';
-            modal.style.display = 'flex';
+            document.getElementById('modal-img').src = el.src;
+            document.getElementById('img-caption').innerText = caption;
+            document.getElementById('modal').style.display = 'flex';
         }
 
-        const msg = "ถึง...เธอที่น่ารักที่สุด ❤️\n\nสุขสันต์วันครบรอบ 1 ปีนะ ขอบคุณที่อยู่เคียงข้างกัน และทำให้ทุกวันมีความหมาย\n\nเค้าสัญญาว่าจะเป็นคนที่ดีขึ้นในทุกวัน และที่สำคัญ เค้าจะไม่ยุ่งเกี่ยวกับสิ่งไม่ดีตลอดชีวิต เพื่ออนาคตที่สดใสของเรานะ\n\nรักเธอที่สุดเลยเจ้าความรัก ♡";
-        let isTyped = false;
         function openLetter() {
             document.getElementById('env').classList.add('open');
-            if(!isTyped) {
-                isTyped = true;
-                let i = 0;
+            const msg = "ถึง...เธอที่รักที่สุด ❤️\n\nสุขสันต์วันครบรอบ 1 ปีนะ ขอบคุณที่อยู่เคียงข้างกัน และทำให้ทุกวันมีความหมาย\n\nเค้าสัญญาว่าจะเป็นคนที่ดีขึ้นในทุกวัน และที่สำคัญ เค้าจะไม่ยุ่งเกี่ยวกับสิ่งไม่ดีตลอดชีวิต เพื่ออนาคตที่สดใสของเรานะ\n\nรักเธอที่สุดเลยเจ้าความรัก ♡";
+            let i = 0;
+            if(document.getElementById('typewriter').innerHTML === "") {
                 function type() {
                     if (i < msg.length) {
                         document.getElementById('typewriter').innerHTML += msg.charAt(i) === '\n' ? '<br>' : msg.charAt(i);
@@ -272,17 +296,17 @@
             }
         }
 
-        const prizes = ["คูปองตามใจ 1 วัน ✨", "คูปองบุฟเฟต์ฟรี 1 มื้อ 🥩", "คูปองหอมแจ้ม 10 ที 😘", "คูปองยกโทษให้ 1 ครั้ง 🥺", "คูปองนวดไหล่ 30 นาที 💆‍♂️"];
+        const prizes = ["คูปองตามใจ 1 วัน ✨", "บุฟเฟต์ฟรี 1 มื้อ 🥩", "หอมแจ้ม 10 ที 😘", "ยกโทษให้ 1 ครั้ง 🥺", "นวดไหล่ 30 นาที 💆‍♂️"];
         function pickBox(el) {
-            el.animate([{transform:'scale(1)'}, {transform:'rotate(10deg)'}, {transform:'rotate(-10deg)'}, {transform:'scale(1)'}], {duration:300, iterations:3});
+            el.style.transform = "scale(0.5)";
+            el.style.opacity = "0";
             setTimeout(() => {
                 const prize = prizes[Math.floor(Math.random()*prizes.length)];
-                document.getElementById('modal-img').style.display = 'none';
+                document.getElementById('photo-area').style.display = 'none';
                 document.getElementById('coupon-area').style.display = 'block';
                 document.getElementById('coupon-text').innerText = prize;
                 document.getElementById('modal').style.display = 'flex';
-                el.innerText = "✨";
-            }, 1000);
+            }, 500);
         }
 
         function closeModal() { document.getElementById('modal').style.display = 'none'; }

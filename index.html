@@ -32,9 +32,10 @@
         }
         .shake { animation: shake 0.4s; }
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
-        .pass-dots { display: flex; gap: 15px; margin-bottom: 30px; }
+        .pass-dots { display: flex; gap: 15px; margin-bottom: 20px; }
         .dot { width: 15px; height: 15px; border: 2px solid var(--primary); border-radius: 50%; transition: 0.3s; }
         .dot.active { background: var(--primary); transform: scale(1.2); box-shadow: 0 0 10px var(--primary); }
+        #error-msg { height: 20px; color: var(--primary); font-size: 0.8rem; margin-bottom: 20px; font-weight: 400; }
         .keypad { display: grid; grid-template-columns: repeat(3, 80px); gap: 15px; }
         .key { 
             width: 80px; height: 80px; background: white; border-radius: 50%;
@@ -48,7 +49,6 @@
         #main-app { display: none; padding-bottom: 120px; }
         section { min-height: 100vh; padding: 60px 20px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
 
-        /* Clock & Calendar */
         .calendar-wrap { display: flex; gap: 10px; margin-bottom: 10px; }
         .calendar-card {
             background: white; width: 90px; height: 110px; border-radius: 15px;
@@ -65,16 +65,9 @@
         }
         .clock-val { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--primary); }
 
-        /* --- PHOTO GRID (Number 1 Shape) --- */
-        .number-one-grid { 
-            display: grid; 
-            grid-template-columns: repeat(3, 85px); 
-            grid-template-rows: repeat(5, 85px); 
-            gap: 15px; 
-            margin-top: 30px; 
-        }
+        /* Photo Grid (Number 1 Shape) */
+        .number-one-grid { display: grid; grid-template-columns: repeat(3, 85px); grid-template-rows: repeat(5, 85px); gap: 15px; margin-top: 30px; }
         .img-item { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; border: 3px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer; }
-        /* Positioning for Number 1 */
         .pos1 { grid-column: 2; grid-row: 1; }
         .pos2 { grid-column: 2; grid-row: 2; }
         .pos3 { grid-column: 2; grid-row: 3; }
@@ -82,7 +75,7 @@
         .pos5 { grid-column: 1; grid-row: 5; }
         .pos6 { grid-column: 2; grid-row: 5; }
         .pos7 { grid-column: 3; grid-row: 5; }
-        .pos8 { grid-column: 1; grid-row: 2; } /* หัวเลข 1 */
+        .pos8 { grid-column: 1; grid-row: 2; }
 
         /* Envelope */
         .envelope-container { position: relative; height: 350px; display: flex; align-items: center; justify-content: center; width: 100%; }
@@ -92,58 +85,60 @@
         .paper { position: absolute; top: 10px; left: 10px; width: 200px; height: 120px; background: white; border-radius: 5px; transition: 0.7s; z-index: 5; padding: 25px; box-sizing: border-box; overflow-y: auto; }
         .envelope.open .paper { transform: translateY(-160px); height: 280px; width: 260px; left: -20px; z-index: 15; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
 
-        /* Gift Boxes */
+        /* Gift Boxes & Animation */
         .boxes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }
-        .gift-box { font-size: 75px; cursor: pointer; transition: 0.3s; }
+        .boxes-grid div:nth-child(5) { grid-column: span 2; justify-self: center; }
+        .gift-box { font-size: 70px; cursor: pointer; transition: 0.3s; display: inline-block; }
+        .box-shake { animation: box-shake 0.8s ease-in-out; }
+        @keyframes box-shake {
+            0% { transform: rotate(0); }
+            15% { transform: rotate(10deg); }
+            30% { transform: rotate(-10deg); }
+            45% { transform: rotate(5deg); }
+            60% { transform: rotate(-5deg); }
+            75% { transform: rotate(2deg); }
+            100% { transform: rotate(0); }
+        }
 
         /* --- REAL COUPON DESIGN --- */
         .coupon-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            position: relative;
-            border: 2px solid var(--primary);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            background: white; border-radius: 10px; overflow: hidden; border: 2px solid var(--primary);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1); width: 260px; margin: 0 auto;
         }
-        .coupon-top {
-            background: var(--primary);
-            color: white;
-            padding: 15px;
-            font-weight: 600;
-            letter-spacing: 2px;
-        }
-        .coupon-body {
-            padding: 25px 15px;
-            background-image: radial-gradient(circle at 0% 50%, transparent 10px, white 10px), 
-                              radial-gradient(circle at 100% 50%, transparent 10px, white 10px);
-        }
-        .coupon-line {
-            border-top: 2px dashed #ffcad4;
-            margin: 15px 0;
-            position: relative;
-        }
+        .coupon-top { background: var(--primary); color: white; padding: 10px; font-weight: 600; font-size: 0.8rem; letter-spacing: 2px; }
+        .coupon-body { padding: 30px 15px; position: relative; }
+        .coupon-line { border-top: 2px dashed var(--secondary); margin: 20px 0; position: relative; }
         .coupon-line::before, .coupon-line::after {
-            content: ''; width: 20px; height: 20px; background: var(--bg);
-            border-radius: 50%; position: absolute; top: -11px;
+            content: ''; width: 24px; height: 24px; background: white; border: 2px solid var(--primary);
+            border-radius: 50%; position: absolute; top: -14px;
         }
-        .coupon-line::before { left: -25px; border-right: 2px solid var(--primary); }
-        .coupon-line::after { right: -25px; border-left: 2px solid var(--primary); }
+        .coupon-line::before { left: -28px; }
+        .coupon-line::after { right: -28px; }
+
+        /* --- POLAROID DESIGN --- */
+        .polaroid {
+            background: white; padding: 10px 10px 35px 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-radius: 2px; transform: rotate(-2deg);
+            max-width: 220px; margin: 0 auto;
+        }
+        .polaroid img { width: 100%; height: auto; display: block; }
+        .polaroid-text { font-family: 'Caveat'; font-size: 1.4rem; color: #444; margin-top: 15px; }
 
         /* Modal */
-        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 10000; align-items: center; justify-content: center; }
-        .modal-content { width: 85%; max-width: 350px; text-align: center; }
-        #modal-img { width: 100%; border-radius: 15px; border: 5px solid white; margin-bottom: 15px; }
-        .img-caption { color: white; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 10px; font-size: 0.9rem; margin-bottom: 10px; }
+        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(5px); z-index: 10000; align-items: center; justify-content: center; }
+        .modal-content { width: 90%; text-align: center; }
 
         nav { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.9); padding: 10px 25px; border-radius: 40px; display: flex; gap: 20px; z-index: 1000; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
         nav a { text-decoration: none; font-size: 24px; }
-        .btn-close { background: var(--primary); color: white; border: none; padding: 10px 30px; border-radius: 25px; cursor: pointer; font-family: 'Prompt'; }
+        .btn-close { background: var(--primary); color: white; border: none; padding: 10px 30px; border-radius: 25px; cursor: pointer; font-family: 'Prompt'; margin-top: 20px; }
     </style>
 </head>
 <body>
 
     <div id="login-page">
-        <h3 style="font-weight: 300; color: var(--primary); margin-bottom: 30px;">Enter Password ♡</h3>
+        <h3 style="font-weight: 300; color: var(--primary); margin-bottom: 10px;">Enter Password ♡</h3>
+        <div id="error-msg"></div>
         <div class="pass-dots">
             <div class="dot"></div><div class="dot"></div><div class="dot"></div>
             <div class="dot"></div><div class="dot"></div><div class="dot"></div>
@@ -158,7 +153,7 @@
 
     <div id="main-app">
         <section id="time-sec">
-            <div style="font-size: 1rem; color: var(--primary); margin-bottom: 20px;">เราเดินมาด้วยกันแล้ว...</div>
+            <div style="font-size: 1rem; color: var(--primary); margin-bottom: 20px;">เรารักกันมานานแค่ไหนแล้วนะ...</div>
             <div class="calendar-wrap">
                 <div class="calendar-card"><span class="cal-top">YEARS</span><span class="cal-num" id="y">0</span><span class="cal-unit">ปี</span></div>
                 <div class="calendar-card"><span class="cal-top">MONTHS</span><span class="cal-num" id="m">0</span><span class="cal-unit">เดือน</span></div>
@@ -167,26 +162,27 @@
             <div class="clock-container">
                 <span class="clock-val" id="ch">00</span> : <span class="clock-val" id="cm">00</span> : <span class="clock-val" id="cs">00</span>
             </div>
+            <p style="font-size: 0.8rem; opacity: 0.6;">Every second counts with you ❤️</p>
         </section>
 
         <section id="photo-sec">
             <h2 style="font-family: 'Caveat'; font-size: 2.5rem; color: var(--primary); margin-bottom: 10px;">Happy 1st Anniversary</h2>
             <div class="number-one-grid">
-                <img src="photo1.jpg" class="img-item pos1" onclick="zoomImg(this, 'รูปตอนเราเจอกันครั้งแรก 💓')">
-                <img src="photo2.jpg" class="img-item pos2" onclick="zoomImg(this, 'รอยยิ้มนี้ที่เค้าหลงรัก 😊')">
-                <img src="photo3.jpg" class="img-item pos3" onclick="zoomImg(this, 'ไปเที่ยวด้วยกันสนุกมากเลย ✈️')">
-                <img src="photo4.jpg" class="img-item pos4" onclick="zoomImg(this, 'ขอบคุณที่คอยซัพพอร์ตกันนะ 🤝')">
-                <img src="photo5.jpg" class="img-item pos5" onclick="zoomImg(this, 'มื้อนี้อร่อยเพราะมีเธอ 🍲')">
-                <img src="photo6.jpg" class="img-item pos6" onclick="zoomImg(this, 'รูปนี้เธอน่ารักที่สุดเลย! 😍')">
-                <img src="photo7.jpg" class="img-item pos7" onclick="zoomImg(this, 'จะอยู่ข้างกันแบบนี้ตลอดไปนะ ♾️')">
-                <img src="photo8.jpg" class="img-item pos8" onclick="zoomImg(this, 'เย้! ครบรอบ 1 ปีแล้ว 🎂')">
+                <img src="photo1.jpg" class="img-item pos1" onclick="zoomImg(this, 'Our first date ❤️')">
+                <img src="photo2.jpg" class="img-item pos2" onclick="zoomImg(this, 'Your sweet smile 😊')">
+                <img src="photo3.jpg" class="img-item pos3" onclick="zoomImg(this, 'Beautiful memories 🌸')">
+                <img src="photo4.jpg" class="img-item pos4" onclick="zoomImg(this, 'Always by your side 🤝')">
+                <img src="photo5.jpg" class="img-item pos5" onclick="zoomImg(this, 'Special dinner 🍲')">
+                <img src="photo6.jpg" class="img-item pos6" onclick="zoomImg(this, 'I love you more! 😍')">
+                <img src="photo7.jpg" class="img-item pos7" onclick="zoomImg(this, 'To infinity & beyond ♾️')">
+                <img src="photo8.jpg" class="img-item pos8" onclick="zoomImg(this, 'You are my world 🌍')">
             </div>
         </section>
 
         <section id="letter-sec">
             <div class="envelope-container">
                 <div class="envelope" id="env" onclick="openLetter()">
-                    <div class="paper" id="paper"><div id="typewriter"></div></div>
+                    <div class="paper" id="paper"><div id="typewriter" style="font-size: 0.85rem; line-height: 1.8; color: #555;"></div></div>
                 </div>
             </div>
         </section>
@@ -194,6 +190,7 @@
         <section id="fun-sec">
             <h3 style="color: var(--primary); margin-bottom: 40px;">Choose Your Gift! 🎁</h3>
             <div class="boxes-grid">
+                <div class="gift-box" onclick="pickBox(this)">🎁</div>
                 <div class="gift-box" onclick="pickBox(this)">🎁</div>
                 <div class="gift-box" onclick="pickBox(this)">🎁</div>
                 <div class="gift-box" onclick="pickBox(this)">🎁</div>
@@ -212,23 +209,24 @@
     <div id="modal" class="modal">
         <div class="modal-content">
             <div id="photo-area">
-                <img id="modal-img" src="">
-                <div id="img-caption" class="img-caption"></div>
+                <div class="polaroid">
+                    <img id="modal-img" src="">
+                    <div id="img-caption" class="polaroid-text"></div>
+                </div>
             </div>
             
             <div id="coupon-area" style="display: none;">
                 <div class="coupon-card">
-                    <div class="coupon-top">LOVE COUPON</div>
+                    <div class="coupon-top">SPECIAL LOVE COUPON</div>
                     <div class="coupon-body">
-                        <div id="coupon-text" style="font-size: 1.3rem; font-weight: 600; color: #ff4d6d;"></div>
+                        <div id="coupon-text" style="font-size: 1.2rem; font-weight: 600; color: #ff4d6d; margin-bottom: 10px;"></div>
                         <div class="coupon-line"></div>
-                        <div style="font-size: 0.7rem; color: #999;">ใช้ได้เฉพาะกับแฟนคนนี้เท่านั้น ❤️<br>หมดอายุ: เมื่อเราเลิกรักกัน</div>
+                        <div style="font-size: 0.65rem; color: #999;">Valid forever for my special person ❤️</div>
                     </div>
                 </div>
-                <p style="color: white; font-size: 0.8rem; margin-top: 15px;">(แคปหน้าจอเก็บไว้นะครับ!)</p>
+                <p style="color: white; font-size: 0.75rem; margin-top: 15px;">Capture screen to use! 📸</p>
             </div>
-            <br>
-            <button class="btn-close" onclick="closeModal()">ปิด</button>
+            <button class="btn-close" onclick="closeModal()">Close ♡</button>
         </div>
     </div>
 
@@ -236,7 +234,8 @@
 
     <script>
         let pass = "";
-        const target = "091262"; // รหัสผ่านเดิมที่คุณตั้งไว้
+        const target = "091262";
+        const errorMsgs = ["รหัสผิดนะเจ้าคนดี 🥺", "จำไม่ได้หรอเนี่ย งอนละนะ! 😤", "เกือบถูกแล้ว ลองอีกนิดดด", "อ๊ะ! ผิดแล้วตัวแสบ 😜", "ม่ายช่ายยย ลองใหม่นะ"];
 
         function addNum(n) {
             if(pass.length < 6) {
@@ -249,6 +248,7 @@
                         document.getElementById('main-app').style.display = 'block';
                         startTimer();
                     } else {
+                        document.getElementById('error-msg').innerText = errorMsgs[Math.floor(Math.random()*errorMsgs.length)];
                         document.getElementById('login-page').classList.add('shake');
                         setTimeout(() => { document.getElementById('login-page').classList.remove('shake'); clearPass(); }, 400);
                     }
@@ -298,15 +298,16 @@
 
         const prizes = ["คูปองตามใจ 1 วัน ✨", "บุฟเฟต์ฟรี 1 มื้อ 🥩", "หอมแจ้ม 10 ที 😘", "ยกโทษให้ 1 ครั้ง 🥺", "นวดไหล่ 30 นาที 💆‍♂️"];
         function pickBox(el) {
-            el.style.transform = "scale(0.5)";
-            el.style.opacity = "0";
+            el.classList.add('box-shake');
             setTimeout(() => {
                 const prize = prizes[Math.floor(Math.random()*prizes.length)];
                 document.getElementById('photo-area').style.display = 'none';
                 document.getElementById('coupon-area').style.display = 'block';
                 document.getElementById('coupon-text').innerText = prize;
                 document.getElementById('modal').style.display = 'flex';
-            }, 500);
+                el.classList.remove('box-shake');
+                el.innerText = "✨";
+            }, 800);
         }
 
         function closeModal() { document.getElementById('modal').style.display = 'none'; }

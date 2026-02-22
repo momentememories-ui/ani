@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy 1st Anniversary ♡</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&family=Caveat:wght@700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&family=Kanit:wght@300;400&family=Orbitron:wght@600&family=Caveat:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #ff8fa3;
@@ -100,51 +100,52 @@
             80% { transform: rotate(-10deg); }
         }
 
-        /* --- TICKET DESIGN (NO CIRCLES) --- */
+        /* --- TICKET DESIGN (KEEPING PREVIOUS ONE) --- */
         .ticket {
             width: 280px; background: white; border-radius: 15px; 
             overflow: hidden; box-shadow: 0 15px 35px rgba(255, 143, 163, 0.3);
             margin: 0 auto; border: 2px solid var(--primary);
         }
-        .ticket-header {
-            background: var(--primary); color: white; padding: 10px;
-            font-size: 0.7rem; font-weight: 600; letter-spacing: 2px;
-        }
-        .ticket-content {
-            padding: 30px 20px; border-bottom: 2.5px dashed var(--secondary);
-        }
-        .ticket-prize {
-            font-size: 1.3rem; font-weight: 600; color: var(--primary); margin: 5px 0;
-        }
-        .ticket-footer {
-            padding: 15px; font-size: 0.6rem; color: #bbb;
-        }
+        .ticket-header { background: var(--primary); color: white; padding: 10px; font-size: 0.7rem; font-weight: 600; letter-spacing: 2px; }
+        .ticket-content { padding: 30px 20px; border-bottom: 2.5px dashed var(--secondary); }
+        .ticket-prize { font-size: 1.3rem; font-weight: 600; color: var(--primary); margin: 5px 0; }
+        .ticket-footer { padding: 15px; font-size: 0.6rem; color: #bbb; }
 
         /* --- POLAROID DESIGN --- */
         .polaroid {
-            background: white; padding: 12px 12px 40px 12px;
+            background: white; padding: 12px 12px 45px 12px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            border-radius: 2px; max-width: 240px; margin: 0 auto;
+            border-radius: 2px; max-width: 250px; margin: 0 auto;
         }
-        .polaroid img { width: 100%; height: auto; display: block; border: 1px solid #f0f0f0; }
+        .polaroid img { width: 100%; height: auto; display: block; border: 1px solid #f9f9f9; }
         .polaroid-text { 
-            font-family: 'Caveat', cursive; font-size: 1.6rem; 
-            color: #555; margin-top: 15px; 
+            font-family: 'Kanit', sans-serif; font-size: 1.1rem; 
+            color: #555; margin-top: 18px; font-weight: 300;
         }
 
         /* Modal (FRESH & BRIGHT) */
         .modal { 
             display: none; position: fixed; top:0; left:0; width:100%; height:100%; 
-            background: rgba(255, 245, 247, 0.95); /* พื้นหลังสดใสไม่มืด */
+            background: rgba(255, 245, 247, 0.95);
             backdrop-filter: blur(8px); z-index: 10000; align-items: center; justify-content: center; 
         }
-        .modal-content { width: 90%; text-align: center; }
+        .modal-content { width: 90%; text-align: center; position: relative; }
+
+        /* Floating Emojis Animation */
+        .emoji-fly {
+            position: absolute; pointer-events: none; font-size: 24px;
+            animation: flyUp 2s linear forwards; z-index: 10001;
+        }
+        @keyframes flyUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-200px) scale(1.5); opacity: 0; }
+        }
 
         nav { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.9); padding: 10px 25px; border-radius: 40px; display: flex; gap: 20px; z-index: 1000; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
         nav a { text-decoration: none; font-size: 24px; }
         .btn-close { 
             background: var(--primary); color: white; border: none; padding: 12px 35px; 
-            border-radius: 25px; cursor: pointer; font-family: 'Prompt'; margin-top: 30px; 
+            border-radius: 25px; cursor: pointer; font-family: 'Prompt', sans-serif; margin-top: 30px; 
             box-shadow: 0 5px 15px rgba(255, 143, 163, 0.4);
         }
     </style>
@@ -222,7 +223,7 @@
     </div>
 
     <div id="modal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content" id="modal-box">
             <div id="photo-area">
                 <div class="polaroid">
                     <img id="modal-img" src="">
@@ -238,9 +239,7 @@
                         <div id="coupon-text" class="ticket-prize"></div>
                         <div style="font-size: 0.7rem; color: #999; margin-top: 5px;">แด่คนสำคัญของหัวใจ</div>
                     </div>
-                    <div class="ticket-footer">
-                        * แคปหน้าจอเพื่อใช้สิทธิ์ได้ตลอดเวลา *
-                    </div>
+                    <div class="ticket-footer">* แคปหน้าจอเพื่อใช้สิทธิ์ได้ตลอดเวลา *</div>
                 </div>
             </div>
             <button class="btn-close" onclick="closeModal()">ปิดหน้าต่าง ♡</button>
@@ -289,12 +288,28 @@
             }, 1000);
         }
 
+        function createEmojiEffect() {
+            const emojis = ['❤️', '💖', '✨', '🌸', '🥰'];
+            for(let i=0; i<15; i++) {
+                setTimeout(() => {
+                    const emoji = document.createElement('div');
+                    emoji.className = 'emoji-fly';
+                    emoji.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+                    emoji.style.left = Math.random() * 80 + 10 + '%';
+                    emoji.style.top = '60%';
+                    document.getElementById('modal-box').appendChild(emoji);
+                    setTimeout(() => emoji.remove(), 2000);
+                }, i * 150);
+            }
+        }
+
         function zoomImg(el, caption) {
             document.getElementById('photo-area').style.display = 'block';
             document.getElementById('coupon-area').style.display = 'none';
             document.getElementById('modal-img').src = el.src;
             document.getElementById('img-caption').innerText = caption;
             document.getElementById('modal').style.display = 'flex';
+            createEmojiEffect();
         }
 
         function openLetter() {
